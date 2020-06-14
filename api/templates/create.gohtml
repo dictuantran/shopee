@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Tax Object</title>
+    <style>
+        input[type=text], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        div {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+</style>
+</head>
+<body>
+
+<h1>Create Tax Object</h1>
+<form method="post" action="/front/cart/process">
+    <input type="hidden" name="store_id" placeholder="store_id" value="1">
+    <input type="text" name="product_name" placeholder="product_name" required>
+    <select name="tax_code_id">
+        {{range .}}
+        <option value="{{.TaxCodeId}}">{{.Name}}</option>
+        {{end}}
+    </select>
+    <input type="text" name="amount" placeholder="amount" required>
+    <input type="submit">
+</form>
+<p class="link"><a href="/order_view/1">Check Bill</a></p>
+
+</body>
+</html>
