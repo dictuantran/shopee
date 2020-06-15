@@ -14,6 +14,8 @@ func main() {
 
 	// get Controller instance
 	tc := controllers.NewTaxCodeController()
+	cc := controllers.NewCartController()
+	oc := controllers.NewOrderController()
 	web := controllers.NewWebController()
 
 	// REST API
@@ -21,6 +23,13 @@ func main() {
 
 	// Web Frontend
 	router.GET("/", web.Index)
+	router.GET("/order_view/:store_id", web.ViewBill)
+
+	// API
+	// GET my bill with tax calculation result from order detail
+	router.GET("/order/:store_id", oc.GetMyBill)
+	// POST object tax into cart or order detail
+	router.POST("/cart", cc.CreateCart)
 
 	// add CORS support (Cross Origin Resource Sharing)
 	// all origins accepted with simple methods (GET, POST). See
