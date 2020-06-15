@@ -6,6 +6,7 @@ import (
 
 	"github.com/dictuantran/shopee/api/controllers"
 	"github.com/julienschmidt/httprouter"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -21,5 +22,9 @@ func main() {
 	// Web Frontend
 	router.GET("/", web.Index)
 
-	log.Fatal(http.ListenAndServe(":3000", router))
+	// add CORS support (Cross Origin Resource Sharing)
+	// all origins accepted with simple methods (GET, POST). See
+	handler := cors.Default().Handler(router)
+
+	log.Fatal(http.ListenAndServe(":3001", handler))
 }

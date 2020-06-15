@@ -10,7 +10,7 @@ var DB *sql.DB
 
 func init() {
 	var err error
-	DB, err = sql.Open("mysql", "root:1234567@/dbshopee")
+	DB, err = sql.Open("mysql", "root:Aa123456@/dbshopee")
 
 	checkErr(err)
 }

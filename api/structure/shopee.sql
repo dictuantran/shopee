@@ -1,5 +1,5 @@
 --
--- Host: localhost    Database: shopee
+-- Host: localhost    Database: dbshopee
 -- ------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
