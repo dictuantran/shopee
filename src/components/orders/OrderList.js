@@ -8,10 +8,7 @@ class TabbedDatagrid extends React.Component {
         this.itemService = new ItemService();
         
         this.state = {
-            showDetails: false,
-            editItem: false,
-            selectedItem: null,
-            newItem: null
+            taxCodes: null
         }
     }
 
@@ -20,29 +17,28 @@ class TabbedDatagrid extends React.Component {
     }
 
     render() {
-        const items = this.state.items;        
+        const taxCodes = this.state.taxCodes;        
+        
+        if(!taxCodes) return null;
 
-      /*   const listItems = items.map((item) => 
-            <li key={item.link}> 
-                <span className="item-name">{item.name}</span>&nbsp;|&nbsp; {item.summary}
+        const taxCodeList = taxCodes.map((taxcode) => 
+            <li key={taxcode.tax_code_id}> 
+                <span className="name">{taxcode.tax_code_id}</span>&nbsp;|&nbsp; {taxcode.name}
             </li>
         )
-    */
+    
         return (
-            <div className="App">
-                <ul className="items">
-                   {/*  {listItems} */}
+            <div>
+                <ul className="taxcodes">
+                {taxCodeList}
                 </ul>
-                <br />
-                <button type="button" name="button"></button>
-                <br />
             </div>
         );
     }
 
     getTaxCodes(){          
         this.itemService.retrieveTaxcode().then(taxcodes => {
-            console.log(taxcodes);
+            this.setState({taxCodes : taxcodes});
         })
     }
 }

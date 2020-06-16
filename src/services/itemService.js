@@ -14,7 +14,7 @@ class ItemService {
                 }                
                 return response.json();
             })
-            .then(json => {                
+            .then(json => {
                 return json.data;
             })
             .catch(error=> {
