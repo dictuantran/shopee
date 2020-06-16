@@ -6,16 +6,15 @@ class ItemService {
         this.config = new Configuration();
     }
 
-    async retrieveTaxcode(){
+    async retrieveTaxcode(){        
         return fetch(this.config.TAXCODE_COLLECTION_URL)
             .then(response => {
                 if(!response.ok) {
                     this.handleResponseError(response);                    
-                }
+                }                
                 return response.json();
             })
-            .then(json => {        
-                console.log(json.data);       
+            .then(json => {                
                 return json.data;
             })
             .catch(error=> {
@@ -69,3 +68,5 @@ class ItemService {
         console.log(error.message);
     }    
 }
+
+export default ItemService;
