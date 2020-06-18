@@ -2,7 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch",
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch ReactJS",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}"
+        },
+
+        {
+            "name": "Launch Go",
             "type": "go",
             "request": "launch",
             "mode": "debug",
