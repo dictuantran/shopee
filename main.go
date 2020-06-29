@@ -13,6 +13,7 @@ func main() {
 	router := httprouter.New()
 
 	// get Controller instance
+	prodController := controllers.NexProductController()
 	tc := controllers.NewTaxCodeController()
 	cc := controllers.NewCartController()
 	oc := controllers.NewOrderController()
@@ -26,6 +27,7 @@ func main() {
 	router.GET("/order_view/:store_id", web.ViewBill)
 
 	// API
+	router.GET("/product/GetProduct", prodController.GetProductByCategory)
 	// GET my bill with tax calculation result from order detail
 	router.GET("/order/:store_id", oc.GetMyBill)
 	// POST object tax into cart or order detail
