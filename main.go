@@ -27,9 +27,10 @@ func main() {
 	router.GET("/order_view/:store_id", web.ViewBill)
 
 	// API
+	router.GET("/order/GetOrder", oc.GetOrder)
+	router.GET("/order/GetOrderDetail/:ID", oc.GetOrderDetail)
 	router.GET("/product/GetProduct", prodController.GetProductByCategory)
-	// GET my bill with tax calculation result from order detail
-	router.GET("/order/:store_id", oc.GetMyBill)
+
 	// POST object tax into cart or order detail
 	router.POST("/cart", cc.CreateCart)
 

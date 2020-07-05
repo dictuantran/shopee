@@ -1,28 +1,40 @@
 package models
 
-import "github.com/dictuantran/shopee/api/config"
+import (
+	"time"
 
-type Orders struct {
-	StoreId        int     `json:"store_id"`
-	TotalTaxAmount float64 `json:"total_tax_amount"`
-	TotalAmount    float64 `json:"total_amount"`
-	GrandTotal     float64 `json:"grand_total"`
+	"github.com/dictuantran/shopee/api/config"
+)
+
+type Order struct {
+	OrderId       int       `json:"OrderId"`
+	OrderDate     time.Time `json:"OrderDate"`
+	CreatedBy     string    `json:"CreatedBy"`
+	OrderStatus   string    `json:"OrderStatus"`
+	PaymentMethod string    `json:"PaymentMethod"`
+	PaymentStatus string    `json:"PaymentStatus"`
+	Price         float64   `json:"Price"`
 }
 
-func TotalBillByStoreIdForDraftOrder(storeId int) Orders {
-	total := Orders{}
-
-	sql := `SELECT store_id, 
-		SUM(amount) as total_amount, 
-		SUM(tax_amount) as total_tax_amount, 
-		SUM(total_amount) as grand_total 
-	FROM order_details where order_status = 0 and store_id = ? 
-	GROUP BY store_id`
-
-	row := config.DB.QueryRow(sql, storeId)
-
-	err := row.Scan(&total.StoreId, &total.TotalAmount, &total.TotalTaxAmount, &total.GrandTotal)
+func FetchOrder() []Order {
+	rows, err := config.DB.Query("call GetOrders('2017-02-01', '2017-05-01')")
 	checkErr(err)
+	defer rows.Close()
 
-	return total
+	orders := make([]Order, 0)
+	for rows.Next() {
+		order := Order{}
+		err := rows.Scan(&order.OrderId,
+			&order.OrderDate,
+			&order.CreatedBy,
+			&order.PaymentMethod,
+			&order.OrderStatus,
+			&order.PaymentStatus,
+			&order.Price)
+		checkErr(err)
+
+		orders = append(orders, order)
+	}
+
+	return orders
 }

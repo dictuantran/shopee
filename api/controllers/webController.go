@@ -21,7 +21,7 @@ type (
 type BaseUrl string
 
 const (
-	development BaseUrl = "http://localhost:3000/"
+	development BaseUrl = "http://localhost:3001/"
 )
 
 func NewWebController() *WebController {
@@ -115,7 +115,7 @@ func (web WebController) ViewBill(w http.ResponseWriter, r *http.Request, ps htt
 	url := buffer.String()
 	body := RequestGet(url)
 
-	order := OrderResp{}
+	order := OrderResponse{}
 	jsonErr := json.Unmarshal(body, &order)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)

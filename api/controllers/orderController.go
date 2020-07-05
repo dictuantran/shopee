@@ -14,31 +14,46 @@ type (
 	OrderController struct{}
 )
 
-type OrderResp struct {
-	RespCode string       `json:"response_code"`
-	RespDesc string       `json:"response_description"`
-	Data     []models.Tax `json:"data"`
-	models.Orders
+type OrderResponse struct {
+	RespCode string         `json:"response_code"`
+	RespDesc string         `json:"response_description"`
+	Data     []models.Order `json:"data"`
+}
+
+type OrderDetailResponse struct {
+	RespCode string               `json:"response_code"`
+	RespDesc string               `json:"response_description"`
+	Data     []models.OrderDetail `json:"data"`
 }
 
 func NewOrderController() *OrderController {
 	return &OrderController{}
 }
 
-// GetMyBill retrieves an Order Detail resource
-func (oc OrderController) GetMyBill(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	// Grab store_id
-	i := p.ByName("store_id")
-	store_id, _ := strconv.Atoi(i)
+func (oc OrderController) GetOrder(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	// Fetch data from model
+	orders := models.FetchOrder()
 
-	// Get from order detail with that store_id that order_status = 0
-	bill := models.FetchOrderDetailsByStoreIdForDraftOrder(store_id)
+	// Define response
+	d := OrderResponse{"1", "success", orders}
 
-	// Get all total from order detail with that store_id that order_status = 0
-	totalBill := models.TotalBillByStoreIdForDraftOrder(store_id)
+	// Marshal provided interface into JSON structure
+	uj, _ := json.Marshal(d)
 
-	// define Response
-	d := OrderResp{"1", "success", bill, totalBill}
+	// Write content-type, statuscode, payload
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	fmt.Fprintf(w, "%s", uj)
+}
+
+func (oc OrderController) GetOrderDetail(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	// Fetch data from model
+	orderID, _ := strconv.Atoi(p.ByName("ID"))
+	orderDetail := models.FetchOrderDetailByOrderID(orderID)
+
+	fmt.Print(orderID)
+	// Define response
+	d := OrderDetailResponse{"1", "success", orderDetail}
 
 	// Marshal provided interface into JSON structure
 	uj, _ := json.Marshal(d)

@@ -16,11 +16,10 @@ class Order extends Component {
     }       
 
     componentDidMount() {
-        const apiURL = "http://localhost:3001/tax_code";       
+        const apiURL = "http://localhost:3001/order/GetOrder";       
         fetch(apiURL)
             .then(response => {
-                if(!response.ok) {
-                    console.log(response)                 
+                if(!response.ok) {                                    
                 }                                
                 return response.json()
             })
@@ -42,17 +41,53 @@ class Order extends Component {
                     <TableHead>
                         <TableRow>
                             <TableCell>
-                                Name
+                                Order ID
+                            </TableCell>
+                            <TableCell>
+                                Order Date
+                            </TableCell>
+                            <TableCell>
+                                Order Status
+                            </TableCell>
+                            <TableCell>
+                                Created By
+                            </TableCell>
+                            <TableCell>
+                                Payment Method
+                            </TableCell>
+                            <TableCell>
+                                Payment Status
+                            </TableCell>
+                            <TableCell>
+                                Price
                             </TableCell>
                         </TableRow>                        
                     </TableHead>
                        
                     <TableBody>
                     {rows.map((row) => (
-                        <TableRow key={row.tax_code_id}>
-                        <TableCell>
-                            {row.name}
-                        </TableCell>
+                        <TableRow key={row.OrderId}>
+                            <TableCell>
+                                {row.OrderId}
+                            </TableCell>
+                            <TableCell>
+                                {row.OrderDate}
+                            </TableCell>
+                            <TableCell>
+                                {row.OrderStatus}
+                            </TableCell>
+                            <TableCell>
+                                {row.CreatedBy}
+                            </TableCell>
+                            <TableCell>
+                                {row.PaymentMethod}
+                            </TableCell>
+                            <TableCell>
+                                {row.PaymentStatus}
+                            </TableCell>
+                            <TableCell>
+                                {row.Price}
+                            </TableCell>
                         </TableRow>   
                     ))}
                        
