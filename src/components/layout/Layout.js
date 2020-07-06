@@ -18,7 +18,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems } from './LeftMenu';
-import Order from '../orders/Order';
+import OrderList from '../orders/OrderList';
 
 const drawerWidth = 240;
 
@@ -160,7 +160,7 @@ export default function Layout() {
                     <Grid container spacing={1}>
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <Order />
+                                <OrderList />
                             </Paper>
                         </Grid>
                     </Grid>
