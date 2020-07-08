@@ -16,6 +16,9 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import "react-responsive-modal/styles.css";
+import Modal from 'react-responsive-modal';
+import OrderDetail from './OrderDetail';
 
 const useRowStyles = makeStyles({
     root: {
@@ -45,7 +48,7 @@ function Row(props) {
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
     const collapseExpandIcon = (
-        <IconButton aria-label="expand row" size="small" onClick={ () => setOpen(!open)}>
+        <IconButton aria-label="expand row" size="small" onClick={ () => setOpen(!open) }>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}            
         </IconButton>
     );
@@ -120,9 +123,27 @@ const rows = [
 ]
 
 class OrderList extends Component {
+    state = {
+        open: false
+    }
+    
+    onOpenModal = () => {
+        this.setState({ open: true });
+    };
+    
+    onCloseModal = () => {
+        this.setState({ open: false });
+    };
+
     render(){
+        const { open } = this.state;
+
         return(
             <TableContainer component={Paper}>
+                <button onClick={this.onOpenModal}>Open modal</button>
+                <Modal open={open} onClose={this.onCloseModal}>
+                    <OrderDetail />
+                </Modal>
                 <Table aria-label="collapsiable table">
                     <TableHead>
                         <TableRow>

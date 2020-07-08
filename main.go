@@ -27,6 +27,7 @@ func main() {
 	router.GET("/order_view/:store_id", web.ViewBill)
 
 	// API
+	router.POST("/order/ImportOrder", oc.ImportOrder)
 	router.GET("/order/GetOrder", oc.GetOrder)
 	router.GET("/order/GetOrderDetail/:ID", oc.GetOrderDetail)
 	router.GET("/product/GetProduct", prodController.GetProductByCategory)
