@@ -2,10 +2,9 @@ package models
 
 import (
 	"time"
-
-	"github.com/dictuantran/shopee/api/config"
 )
 
+// Order struct
 type Order struct {
 	OrderId       int       `json:"OrderId"`
 	OrderDate     time.Time `json:"OrderDate"`
@@ -16,25 +15,26 @@ type Order struct {
 	Price         float64   `json:"Price"`
 }
 
-func FetchOrder() []Order {
-	rows, err := config.DB.Query("call GetOrders('2017-02-01', '2017-05-01')")
-	checkErr(err)
-	defer rows.Close()
+// OrderDetail struct
+type OrderDetail struct {
+	OrderID      int     `json:"OrderID"`
+	ProductID    int     `json:"ProductID"`
+	ProductName  string  `json:"ProductName"`
+	ProductAlias string  `json:"ProductAlias"`
+	Quantity     int     `json:"Quantity"`
+	Price        float64 `json:"Price"`
+}
 
-	orders := make([]Order, 0)
-	for rows.Next() {
-		order := Order{}
-		err := rows.Scan(&order.OrderId,
-			&order.OrderDate,
-			&order.CreatedBy,
-			&order.PaymentMethod,
-			&order.OrderStatus,
-			&order.PaymentStatus,
-			&order.Price)
-		checkErr(err)
+// OrderResponse struct
+type OrderResponse struct {
+	RespCode string  `json:"response_code"`
+	RespDesc string  `json:"response_description"`
+	Data     []Order `json:"data"`
+}
 
-		orders = append(orders, order)
-	}
-
-	return orders
+// OrderDetailResponse struct
+type OrderDetailResponse struct {
+	RespCode string        `json:"response_code"`
+	RespDesc string        `json:"response_description"`
+	Data     []OrderDetail `json:"data"`
 }

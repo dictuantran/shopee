@@ -115,7 +115,7 @@ func (web WebController) ViewBill(w http.ResponseWriter, r *http.Request, ps htt
 	url := buffer.String()
 	body := RequestGet(url)
 
-	order := OrderResponse{}
+	order := models.OrderResponse{}
 	jsonErr := json.Unmarshal(body, &order)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
